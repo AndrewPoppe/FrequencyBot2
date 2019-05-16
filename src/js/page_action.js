@@ -17,20 +17,27 @@ function getData(Key) {
 // custom scales global :(
 let customScales = {};
 getData('customScales').then(result => {
-	customScales = result;
+	if (result !== undefined) customScales = result;
 });
 
 
 // Get last used scale to set that as default. Then add in all scale options to
 // scale type selector
-chrome.storage.local.get('lastScaleType', res => {
-	if (res.type === undefined) res = getScale("major");
+chrome.storage.local.get(['lastScaleType', 'customScales'], res => {
+	let last = res.lastScaleType,
+		custom = res.customScales;
+	if (last === undefined) last = getScale("major");
 	Tonal.Scale.names().map(name => {
 		let selected = "";
-		if (name === res.type) selected = " selected";
 	    $('#ScaleTypeSelect').append('<option value="'+name+'"'+selected+'>'+name+'</option>');
 	});
-	$('#DefineScaleInput').val(res.semitones.toString());
+	for (let cname in custom) {
+		let cselected = "";
+		if (cname === last.type) cselected = " selected";
+		addCustomScale(cname, cselected);
+	}
+	$("#ScaleTypeSelect option[value='"+last.type+"']").prop("selected", true);
+	$('#DefineScaleInput').val(last.semitones.toString());
 })
 
 // Callback for when a scale is selected in scale type selector
