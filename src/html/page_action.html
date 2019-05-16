@@ -65,9 +65,23 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="NameScaleInput">Name of Scale:</label>
           </div>
-          <input type="text" class="form-control" id="NameScaleInput" placeholder="Default" aria-label= "Default" aria-describedby="basic-addon1">
+          <input type="text" class="form-control" id="NameScaleInput" placeholder="Default">
           <div class="input-group-append">
-            <button type="button" class="btn btn-secondary">Save Scale</button>
+            <button type="button" id="DefineScaleSaveButton" class="btn btn-secondary">Save Scale</button>
+          </div>
+        </div>
+        <div id="ScaleSaveConfirmation" style="display: none;">
+          <p class="text-success">Save Successful</p>
+        </div>
+        <div id="ScaleSaveFailure" style="display: none;">
+          <p class="text-danger">Save Failed</p>
+        </div>
+      </div>
+
+      <div class="modal fade" id="alertModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-body">
+            <div class="p-3 mb-2 bg-danger text-white">You must provide a name for this custom scale!</div>
           </div>
         </div>
       </div>
@@ -164,6 +178,19 @@
         </div>
       </div>
 
+      <!-- Random Distribution for note selection -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="NoteRandomSelect" class="input-group-text">Randomization for Notes:</label>
+          </div>
+          <select class="form-control" id="NoteRandomSelect">
+            <option value="uniform" selected>Uniform</option>
+            <option value="normal">Normal (Gaussian)</option>
+          </select>
+        </div>
+      </div>
+
 
       <br>
 
@@ -187,6 +214,8 @@
         </div>
       </div>
 
+      <br>
+
       <!-- Max Repeats -->
       <div class="form-row">
         <div class="input-group col-sm-3">
@@ -207,6 +236,19 @@
         </div>
       </div>
 
+      <!-- Random Distribution for rest duration -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="RestRandomSelect" class="input-group-text">Randomization for Rest Duration:</label>
+          </div>
+          <select class="form-control" id="RestRandomSelect">
+            <option value="uniform" selected>Uniform</option>
+            <option value="normal">Normal (Gaussian)</option>
+          </select>
+        </div>
+      </div>
+
       <!-- Max Note Duration -->
       <div class="form-row">
         <div class="input-group col-sm-3">
@@ -214,6 +256,19 @@
             <label for="MaxNoteDurInput" class="input-group-text">Max Note Duration:</label>
           </div>
           <input class="form-control" type="number" value="8" id="MaxNoteDurInput">
+        </div>
+      </div>
+
+      <!-- Random Distribution for note duration -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="NoteRandomSelect" class="input-group-text">Randomization for Note Duration:</label>
+          </div>
+          <select class="form-control" id="NoteRandomSelect">
+            <option value="uniform" selected>Uniform</option>
+            <option value="normal">Normal (Gaussian)</option>
+          </select>
         </div>
       </div>
 
@@ -269,6 +324,7 @@
   <script type="text/javascript" src="/src/js/create_ffmpeg_call.js"></script>
   <script type="text/javascript" src="/src/js/load_files.js"></script>
   <script type="text/javascript" src="/src/js/run_ffmpeg.js"></script>
+  <script type="text/javascript" src="/src/js/scales.js"></script>
   <script type="text/javascript" src="/src/js/page_action.js"></script>
 </body>
 </html>

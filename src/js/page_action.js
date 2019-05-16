@@ -1,18 +1,25 @@
 
 
-// function to take scale name and return object with type and semitones
-function getScale(name) {
-	let result = {},
-		scale = Tonal.scale(name);
-	if (scale === undefined) {
-		//TODO
-	} else {
-		semitones = scale.map(Tonal.Interval.semitones);
-		result.type = name;
-		result.semitones = semitones;
-	}
-	return result;
+// function for getting chrome storage item that returns a promise for chaining
+function getData(Key) {
+	return new Promise(function(resolve, reject) {
+		chrome.storage.local.get(Key, function(items) {
+			if (chrome.runtime.lastError) {
+				console.error(chrome.runtime.lastError.message);
+				reject(chrome.runtime.lastError.message);
+			} else {
+				resolve(items[Key]);
+			}
+		});
+	});
 }
+
+// custom scales global :(
+let customScales = {};
+getData('customScales').then(result => {
+	customScales = result;
+});
+
 
 // Get last used scale to set that as default. Then add in all scale options to
 // scale type selector
