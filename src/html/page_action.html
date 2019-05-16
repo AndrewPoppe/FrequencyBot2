@@ -4,12 +4,13 @@
   <title>FrequencyBot</title>
   <link rel="stylesheet" type="text/css" href="/lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/lib/jquery-ui/jquery-ui.min.css">
-  <link rel="stylesheet" type="text/css" href="/src/css/style.css"> 
+  <!--<link rel="stylesheet" type="text/css" href="/src/css/style.css">  -->
   <script type="text/javascript" src="/lib/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/lib/popper.min.js"></script>
   <script type="text/javascript" src="/lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/lib/FileSaver.js"></script>
+  <script type="module" src="/lib/FileSaver.js"></script>
+  <script type="text/javascript" src="/lib/tonal.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
@@ -38,24 +39,23 @@
     <form>
       
       <!-- Scale Type-->
-      <div class="form-row">
+      <div class="form-row justify-content-between">
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
             <label class="input-group-text" for="ScaleTypeSelect">Scale Type:</label>
           </div>
-          <select class="form-control" id="ScaleTypeSelect">
-            <option>Default scale 1</option>
-            <option>Default scale 2</option>
-          </select>
+          <select class="form-control selectpicker" id="ScaleTypeSelect"></select>
         </div>
-        <div class="col">
+        <div class="col-sm-8">
           <button type="button" class="btn btn-danger">Delete Scale</button>
         </div>
       </div>
+
+      <br>
     
       <!-- Custom Scale -->
-      <div class="form-row">
-        <div class="input-group col-sm-3">
+      <div class="form-row justify-content-start">
+        <div class="input-group col-sm-2">
           <div class="input-group-prepend">
             <label class="input-group-text" for="DefineScaleInput">Define Scale:</label>
           </div>
@@ -72,6 +72,8 @@
         </div>
       </div>
 
+      <br>
+
       <!-- Key -->
       <div class="form-row">
         <div class="input-group col-sm-3">
@@ -79,29 +81,99 @@
             <label for="KeySelect" class="input-group-text">Key:</label>
           </div>
           <select class="form-control" id="KeySelect">
-            <option>A</option>
-            <option>A#</option>
-            <option>B</option>
-            <option>C</option>
-            <option>C#</option>
-            <option>D</option>
-            <option>D#</option>
-            <option>E</option>
-            <option>F</option>
-            <option>F#</option>
-            <option>G</option>
-            <option>G#</option>
+            <option value="A">A</option>
+            <option value="A#">A#</option>
+            <option value="B">B</option>
+            <option value="C" selected>C</option>
+            <option value="C#">C#</option>
+            <option value="D">D</option>
+            <option value="D#">D#</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="F#">F#</option>
+            <option value="G">G</option>
+            <option value="G#">G#</option>
           </select>
         </div>
       </div>
+
+      <!-- Octave -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="OctaveSelect" class="input-group-text">Base Octave:</label>
+          </div>
+          <select class="form-control" id="OctaveSelect">
+            <option value="-1">-1</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Number Octaves Below -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="OctavesBelowSelect" class="input-group-text"># Octaves Below Base:</label>
+          </div>
+          <select class="form-control" id="OctavesBelowSelect">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Number Octaves Above -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="OctavesAboveSelect" class="input-group-text"># Octaves Above Base:</label>
+          </div>
+          <select class="form-control" id="OctavesAboveSelect">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      </div>
+
+
+      <br>
 
       <!-- Duration -->
       <div class="form-row">
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
-            <label for="DurationSelect" class="input-group-text">Track Duration:</label>
+            <label for="DurationInput" class="input-group-text">Track Duration:</label>
           </div>
-          <input class="form-control" type="number" value="120" id="DurationSelect">
+          <input class="form-control" type="number" value="120" id="DurationInput">
         </div>
       </div>
 
@@ -109,9 +181,46 @@
       <div class="form-row">
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
-            <label for="BPMSelect" class="input-group-text">Beats Per Minute:</label>
+            <label for="BPMInput" class="input-group-text">Beats Per Minute:</label>
           </div>
-          <input class="form-control" type="number" value="120" id="BPMSelect">
+          <input class="form-control" type="number" value="120" id="BPMInput">
+        </div>
+      </div>
+
+      <!-- Max Repeats -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="MaxRepeatsInput" class="input-group-text">Max Note Repeats:</label>
+          </div>
+          <input class="form-control" type="number" value="3" id="MaxRepeatsInput">
+        </div>
+      </div>
+
+      <!-- Max Rest Duration -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="MaxRestDurInput" class="input-group-text">Max Rest Duration:</label>
+          </div>
+          <input class="form-control" type="number" value="3" id="MaxRestDurInput">
+        </div>
+      </div>
+
+      <!-- Max Note Duration -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="MaxNoteDurInput" class="input-group-text">Max Note Duration:</label>
+          </div>
+          <input class="form-control" type="number" value="8" id="MaxNoteDurInput">
+        </div>
+      </div>
+
+      <br>
+      <div class="form-row justify-content-center">
+        <div class="input-group col-sm-8">
+          <button type="button" class="btn btn-primary">Create MIDI File</button>
         </div>
       </div>
 
