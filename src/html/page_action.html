@@ -9,6 +9,7 @@
   <script type="text/javascript" src="/lib/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/lib/popper.min.js"></script>
   <script type="text/javascript" src="/lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/lib/random-0.26.js"></script>
   <script type="module" src="/lib/FileSaver.js"></script>
   <script type="text/javascript" src="/lib/tonal.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,7 +45,7 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="ScaleTypeSelect">Scale Type:</label>
           </div>
-          <select class="form-control selectpicker" id="ScaleTypeSelect"></select>
+          <select class="form-control selectpicker" data-live-search="true" id="ScaleTypeSelect"></select>
         </div>
         <div class="col-sm-8">
           <button type="button" class="btn btn-danger">Delete Scale</button>
@@ -78,20 +79,11 @@
         </div>
       </div>
 
-      <!-- modal for no custom scale name -->
+      <!-- modal for alert/warning -->
       <div class="modal fade" id="alertModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
           <div class="modal-body">
-            <div class="p-3 mb-2 bg-danger text-white">You must provide a name for this custom scale!</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal for invalid custom scale -->
-      <div class="modal fade" id="alertModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-body">
-            <div class="p-3 mb-2 bg-danger text-white">The scale you provided was not valid. Please follow the instuctions in the tooltip.</div>
+            <div class="p-3 mb-2 bg-danger text-white"></div>
           </div>
         </div>
       </div>
@@ -236,34 +228,17 @@
         </div>
       </div>
 
-      <!-- Max Rest Duration -->
+      <!-- Min/Max Note Duration -->
       <div class="form-row">
-        <div class="input-group col-sm-3">
+        <div class="input-group col-sm-2">
           <div class="input-group-prepend">
-            <label for="MaxRestDurInput" class="input-group-text">Max Rest Duration:</label>
+            <label for="MinNoteDurInput" class="input-group-text">Min Note:</label>
           </div>
-          <input class="form-control" type="number" value="3" id="MaxRestDurInput">
+          <input class="form-control" type="number" value="1" id="MinNoteDurInput">
         </div>
-      </div>
-
-      <!-- Random Distribution for rest duration -->
-      <div class="form-row">
-        <div class="input-group col-sm-3">
+        <div class="input-group col-sm-2">
           <div class="input-group-prepend">
-            <label for="RestRandomSelect" class="input-group-text">Randomization for Rest Duration:</label>
-          </div>
-          <select class="form-control" id="RestRandomSelect">
-            <option value="uniform" selected>Uniform</option>
-            <option value="normal">Normal (Gaussian)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Max Note Duration -->
-      <div class="form-row">
-        <div class="input-group col-sm-3">
-          <div class="input-group-prepend">
-            <label for="MaxNoteDurInput" class="input-group-text">Max Note Duration:</label>
+            <label for="MaxNoteDurInput" class="input-group-text">Max Note:</label>
           </div>
           <input class="form-control" type="number" value="8" id="MaxNoteDurInput">
         </div>
@@ -273,9 +248,9 @@
       <div class="form-row">
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
-            <label for="NoteRandomSelect" class="input-group-text">Randomization for Note Duration:</label>
+            <label for="NoteDurRandomSelect" class="input-group-text">Randomization for Note Duration:</label>
           </div>
-          <select class="form-control" id="NoteRandomSelect">
+          <select class="form-control" id="NoteDurRandomSelect">
             <option value="uniform" selected>Uniform</option>
             <option value="normal">Normal (Gaussian)</option>
           </select>
@@ -283,13 +258,55 @@
       </div>
 
       <br>
+
+      <!-- Min/Max Rest Duration -->
+      <div class="form-row">
+        <div class="input-group col-sm-2">
+          <div class="input-group-prepend">
+            <label for="MinRestDurInput" class="input-group-text">Min Rest:</label>
+          </div>
+          <input class="form-control" type="number" value="0" id="MinRestDurInput">
+        </div>
+        <div class="input-group col-sm-2">
+          <div class="input-group-prepend">
+            <label for="MaxRestDurInput" class="input-group-text">Max Rest:</label>
+          </div>
+          <input class="form-control" type="number" value="3" id="MaxRestDurInput">
+        </div>
+      </div>
+
+      <!-- Random Distribution for rest duration -->
+      <div class="form-row">
+        <div class="input-group col-sm-3">
+          <div class="input-group-prepend">
+            <label for="RestDurRandomSelect" class="input-group-text">Randomization for Rest Duration:</label>
+          </div>
+          <select class="form-control" id="RestDurRandomSelect">
+            <option value="uniform" selected>Uniform</option>
+            <option value="normal">Normal (Gaussian)</option>
+          </select>
+        </div>
+      </div>
+
+      
+
+      <br>
       <div class="form-row justify-content-center">
         <div class="input-group col-sm-8">
-          <button type="button" class="btn btn-primary">Create MIDI File</button>
+          <button type="button" class="btn btn-primary" id="SubmitButton">Create MIDI File</button>
         </div>
       </div>
 
     </form>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -334,7 +351,9 @@
   <script type="text/javascript" src="/src/js/create_ffmpeg_call.js"></script>
   <script type="text/javascript" src="/src/js/load_files.js"></script>
   <script type="text/javascript" src="/src/js/run_ffmpeg.js"></script>
+  <script type="text/javascript" src="/src/js/modals.js"></script>
   <script type="text/javascript" src="/src/js/scales.js"></script>
+  <script type="text/javascript" src="/src/js/run_it.js"></script>
   <script type="text/javascript" src="/src/js/page_action.js"></script>
 </body>
 </html>

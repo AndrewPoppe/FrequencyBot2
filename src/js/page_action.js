@@ -1,5 +1,9 @@
 
 
+// Create random number generator
+const random = new Random();
+
+
 // function for getting chrome storage item that returns a promise for chaining
 function getData(Key) {
 	return new Promise(function(resolve, reject) {
@@ -25,11 +29,15 @@ getData('customScales').then(result => {
 // scale type selector
 chrome.storage.local.get(['lastScaleType', 'customScales'], res => {
 	let last = res.lastScaleType,
-		custom = res.customScales;
+		custom = res.customScales,
+		scaleNames = Tonal.Scale.names();
 	if (last === undefined) last = getScale("major");
-	Tonal.Scale.names().map(name => {
+	scaleNames.push('minor');
+	scaleNames.filter(function(value, index, self) { 
+    		return self.indexOf(value) === index;
+	}).sort().map(name => {
 		let selected = "";
-	    $('#ScaleTypeSelect').append('<option value="'+name+'"'+selected+'>'+name+'</option>');
+	    $('#ScaleTypeSelect').append(`<option value="${name}">${name}</option>`);
 	});
 	for (let cname in custom) {
 		let cselected = "";
@@ -48,6 +56,22 @@ $('#ScaleTypeSelect').on('change', e => {
 		$('#DefineScaleInput').val(newScale.semitones.toString());
 	});
 });
+
+
+// attach callback for main start button
+$('#SubmitButton').on('click', runTheProgram);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
