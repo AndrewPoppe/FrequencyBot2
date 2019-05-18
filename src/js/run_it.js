@@ -85,6 +85,7 @@ function validateOptions(options) {
 function runTheProgram() {
 	let options = getOptions(),
 		validation = validateOptions(options);
+	chrome.storage.local.set({lastScaleType: options.scale});
 	console.log(options, validation);
 	alert(JSON.stringify(options));
 }

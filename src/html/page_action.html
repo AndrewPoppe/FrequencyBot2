@@ -48,7 +48,13 @@
           <select class="form-control selectpicker" data-live-search="true" id="ScaleTypeSelect"></select>
         </div>
         <div class="col-sm-8">
-          <button type="button" class="btn btn-danger">Delete Scale</button>
+          <button type="button" class="btn btn-danger" id="DeleteScaleButton">Delete Scale</button>
+          <div id="ScaleDeleteConfirmation" style="display: none;">
+            <p class="text-success">Scale Deleted</p>
+          </div>
+          <div id="ScaleDeleteFailure" style="display: none;">
+            <p class="text-danger">Scale Deletion Failed</p>
+          </div>
         </div>
       </div>
 
@@ -353,6 +359,7 @@
   <script type="text/javascript" src="/src/js/run_ffmpeg.js"></script>
   <script type="text/javascript" src="/src/js/modals.js"></script>
   <script type="text/javascript" src="/src/js/scales.js"></script>
+  <script type="text/javascript" src="/src/js/create_midi_track.js"></script>
   <script type="text/javascript" src="/src/js/run_it.js"></script>
   <script type="text/javascript" src="/src/js/page_action.js"></script>
 </body>

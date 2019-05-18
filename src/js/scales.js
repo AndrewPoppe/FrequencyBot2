@@ -96,9 +96,31 @@ $('#DefineScaleSaveButton').on('click', saveCustomScale);
 function deleteCustomScale(name) {
 	// remove from custom scales storage, then remove list item
 	chrome.storage.local.get("customScales", result => {
-		$(`#ScaleTypeSelect option[value="${name}"]`).remove();
+		delete(result.customScales[name]);
+		chrome.storage.local.set({customScales: result.customScales}, res => {
+			if (chrome.runtime.lastError) {
+				$('#ScaleDeleteFailure').show('fade', 750, function() {
+					$(this).hide('fade', 750)
+				});
+			} else {
+				$('#ScaleDeleteConfirmation').show('fade', 750, function() {
+					$(this).hide('fade', 750)
+				});
+				$(`#ScaleTypeSelect option[value="${name}"]`).remove();
+			}	
+		});
 	});
 }
+
+function deleteScaleHandler() {
+	let name = $('#ScaleTypeSelect').val();
+	if (Tonal.Scale.exists(name)) {
+		showModalWarn("You cannot delete built-in scales.");
+	} else {
+		deleteCustomScale(name);
+	}
+}
+$('#DeleteScaleButton').on('click', deleteScaleHandler);
 
 
 
