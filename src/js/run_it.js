@@ -71,13 +71,39 @@ function getOptions() {
 }
 
 
+// validation function
+// tests whether value is empty, then whether is number between MIN and MAX
+function validate(x, MIN, MAX) {
+	if (x === "") return false;
+	let X = Number(x);
+	if (isNaN(X)) return false;
+	if (X > MAX || X < MIN) return false;
+	return true;
+}
+
 // Validate options
 function validateOptions(options) {
-	let validation = {};
+	let errors = [];
+	// duration and bpm
+	if (!validate(options.track.duration, 1, 5000)) errors.push("Track Duration");
+	if (!validate(options.track.bpm, 1, 500)) errors.push("Track BPM");
 
-	// TODO: validate all the options!
+	// note
+	if (!validate(options.note.maxRepeats, 0, 5000)) errors.push("Note Max Repeats");
+	if (!validate(options.note.duration.min, 1, Number(options.note.duration.max))) errors.push("Note Duration Min");
+	if (!validate(options.note.duration.max, Number(options.note.duration.min), 5000)) errors.push("Note Duration Max");
 
-	return validation;
+	// rest
+	if (!validate(options.rest.duration.min, 0, Number(options.rest.duration.max))) errors.push("Rest Duration Min");
+	if (!validate(options.rest.duration.max, Number(options.rest.duration.min), 5000)) errors.push("Rest Duration Max");
+
+	// Warn
+	if (errors.length !== 0) {
+		showModalWarn(`There were problems with the following inputs: ${JSON.stringify(errors)}`);
+		return false;
+	}
+
+	return true;
 }
 
 // Run the thing
@@ -85,7 +111,8 @@ function validateOptions(options) {
 function runTheProgram() {
 	let options = getOptions(),
 		validation = validateOptions(options);
-	chrome.storage.local.set({lastScaleType: options.scale});
-	console.log(options, validation);
-	alert(JSON.stringify(options));
+	if (validation) {
+		chrome.storage.local.set({lastScaleType: options.scale});
+		console.log(options, validation);
+	}
 }
