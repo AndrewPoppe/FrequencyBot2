@@ -4,7 +4,7 @@
   <title>FrequencyBot</title>
   <link rel="stylesheet" type="text/css" href="/lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/lib/jquery-ui/jquery-ui.min.css">
-  <!--<link rel="stylesheet" type="text/css" href="/src/css/style.css">  -->
+  <link rel="stylesheet" type="text/css" href="/src/css/style.css">
   <script type="text/javascript" src="/lib/jquery.min.js"></script>
   <script type="text/javascript" src="/lib/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/lib/popper.min.js"></script>
@@ -17,26 +17,19 @@
 </head>
 <body>
   <div class="header">
-    <h1>FrequencyBot</h1>
+    <h1 id="AppTitle">FrequencyBot</h1>
     <div class="button-div">
       <div class="child-div"><button id="options-button" class="control-button"><img src="/icons/settings-work-tool.png"></button></div>
     </div>
-    <div class="button-div">
-      <div class="child-div"><button id="upload-button" class="control-button"><img src="/icons/upload-button.png"></button></div>
-    </div>
-    <div id="options-dialog" title="Settings" style="display: none;">
+    <div id="options-dialog" title="Info" style="display: none;">
       <p>
-        <label for="ram-chooser">Set maximum RAM in MB:</label>
-        <input id="ram-chooser" name="MAXRAM">
+        <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/"           title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"          title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
       </p>
     </div>    
   </div>
 
 
   <div id="main-div">
-    <br>
-    <br>
-
     <!-- Container for all Settings -->
     <form>
       
@@ -50,7 +43,8 @@
           <select class="form-control selectpicker" data-live-search="true" id="ScaleTypeSelect"></select>
         </div>
         <div class="col-sm-8">
-          <button type="button" class="btn btn-danger" id="DeleteScaleButton">Delete Scale</button>
+          <button type="button" class="btn btn-danger" id="DeleteScaleButton" data-toggle="tooltip" 
+              data-placement="top" title="Delete the selected custom scale. Cannot delete built-in scales.">Delete Scale</button>
           <div id="ScaleDeleteConfirmation" style="display: none;">
             <p class="text-success">Scale Deleted</p>
           </div>
@@ -66,17 +60,20 @@
       <div class="form-row justify-content-start">
         <div class="input-group col-sm-2">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="DefineScaleInput">Define Scale:</label>
+            <label class="input-group-text" for="DefineScaleInput" data-toggle="tooltip" 
+              data-placement="top" data-html="true" title="Define a custom scale. These should be the notes that appear in the scale measured in semitones from the base note, which is 0. So the major scale would be: <code>0, 2, 4, 5, 7, 9, 11</code>. Numbers less than 0 and greater than 12 are not allowed.">Define Scale:</label>
           </div>
           <input type="text" class="form-control" id="DefineScaleInput" placeholder="1, 1, 1, 1, 1, 1, 1">
         </div>
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="NameScaleInput">Name of Scale:</label>
+            <label class="input-group-text" for="NameScaleInput" data-toggle="tooltip" 
+              data-placement="top" title="Name to be given to the custom scale. This cannot be the same as any built-in scale.">Name of Scale:</label>
           </div>
           <input type="text" class="form-control" id="NameScaleInput" placeholder="Default">
           <div class="input-group-append">
-            <button type="button" id="DefineScaleSaveButton" class="btn btn-secondary">Save Scale</button>
+            <button type="button" id="DefineScaleSaveButton" class="btn btn-secondary" data-toggle="tooltip" 
+              data-placement="top" title="Save a custom scale for use later.">Save Scale</button>
           </div>
         </div>
         <div id="ScaleSaveConfirmation" style="display: none;">
@@ -102,7 +99,8 @@
       <div class="form-row">
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
-            <label for="KeySelect" class="input-group-text">Key:</label>
+            <label for="KeySelect" class="input-group-text" data-toggle="tooltip" 
+              data-placement="right" data-html="true" title="Choose the base of the scale. This with the base octave defines the location of the scale. Refer to this image to choose base note, base octave, and # of octaves above/below:<br><img src='/images/MIDIScale.png'></img>">Key:</label>
           </div>
           <select class="form-control" id="KeySelect">
             <option value="A">A</option>
@@ -306,55 +304,6 @@
       </div>
 
     </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Matched Container 
-    <div class="container" id="matched-container" style="display: none">
-      <h2>Matched Files</h2>
-      <br>
-      <table class="matched" id="match-table" class="sortable">
-        <colgroup>
-            <col class="first">
-            <col class="second">
-            <col class="third">
-        </colgroup>
-        <tr><th>Raw</th><th>Rendered</th><th> </th></tr>
-      </table>
-    </div>
-    -->
-
-    <!-- Unmatched Container
-    <div class="container" id="unmatched-container" style="display: none">
-      <h2>Unmatched</h2> 
-      <span>Drag to match</span>
-      <br>
-      <div id="unmatched-div">
-        <table id="unmatched-raw" class="unmatched" style="">
-          <tr><th>Raw</th></tr>
-        </table>
-        <table id="unmatched-ren" class="unmatched" style="margin-left: 10%">
-          <tr><th>Rendered</th></tr>
-        </table>
-      </div>
-      <br>
-    </div>
-    <br>
-    -->
-
-    <input id="file-upload" type="file" name="name" style="display: none;" accept=".txt, .webm" multiple>
   </div>
   <script type="text/javascript" src="/src/js/raw_file_parser.js"></script>
   <script type="text/javascript" src="/src/js/create_ffmpeg_call.js"></script>

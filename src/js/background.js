@@ -11,6 +11,6 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if(request.type === 'view') {
         chrome.pageAction.show(sender.tab.id);
-        sendResponse({message: "TagPro Replays Sounds loaded."});
+        sendResponse({message: "FrequencyBot2 Loaded."});
     }
 });
