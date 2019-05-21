@@ -81,4 +81,3 @@ $('#options-dialog').dialog({
   	]
 })
 $('#options-button').click(() => $('#options-dialog').dialog('open'));
-makeDraggable();

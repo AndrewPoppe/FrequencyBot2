@@ -1,16 +1,8 @@
 
-chrome.pageAction.onClicked.addListener((tab) => {
-	console.log(tab)
-    chrome.tabs.create({
-        url: "src/html/page_action.html",
+chrome.browserAction.onClicked.addListener((tab) => {
+	chrome.tabs.create({
+        url: "src/html/browser_action.html",
         index: tab.index + 1
     });
 });
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if(request.type === 'view') {
-        chrome.pageAction.show(sender.tab.id);
-        sendResponse({message: "FrequencyBot2 Loaded."});
-    }
-});

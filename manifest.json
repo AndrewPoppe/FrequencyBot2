@@ -4,6 +4,7 @@
   "version": "0.0.2",
   "description": "Create MIDI files with random notes from a chosen scale.",
   "permissions": [
+    "activeTab",
     "storage"
   ],
   "icons": {
@@ -14,8 +15,8 @@
     "128": "icons/icon128.png",
     "256": "icons/icon256.png"
   },
-  "options_page": "src/html/page_action.html",
-  "page_action": {
+  "options_page": "src/html/browser_action.html",
+  "browser_action": {
     "default_icon": {
       "16": "icons/icon16.png",
       "24": "icons/icon24.png",
@@ -31,15 +32,6 @@
       "src/js/background.js"
     ]
   },
-  "content_scripts": [{
-    "js": [
-      "src/js/content.js"
-    ],
-    "matches": [
-      "activeTab"
-    ],
-    "run_at": "document_end"
-  }],
   "web_accessible_resources": [
     "src/html/*.html",
     "src/css/*.css",
