@@ -61,7 +61,10 @@ $('#ScaleTypeSelect').on('change', e => {
 // attach callback for main start button
 $('#SubmitButton').on('click', runTheProgram);
 
-
+// enable tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
 
 
 

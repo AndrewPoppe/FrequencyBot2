@@ -1,0 +1,1 @@
+browserify make_bundle.js --standalone MIDIWriter > MIDIWriter_bundle.js

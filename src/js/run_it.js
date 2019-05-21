@@ -113,6 +113,6 @@ function runTheProgram() {
 		validation = validateOptions(options);
 	if (validation) {
 		chrome.storage.local.set({lastScaleType: options.scale});
-		console.log(options, validation);
+		createTrack(options);
 	}
 }

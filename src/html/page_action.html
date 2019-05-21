@@ -10,8 +10,9 @@
   <script type="text/javascript" src="/lib/popper.min.js"></script>
   <script type="text/javascript" src="/lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/lib/random-0.26.js"></script>
-  <script type="module" src="/lib/FileSaver.js"></script>
   <script type="text/javascript" src="/lib/tonal.min.js"></script>
+  <script type="module" src="/lib/MIDIWriter_bundle.js"></script>
+  <script type="module" src="/lib/FileSaver_bundle.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
@@ -43,7 +44,8 @@
       <div class="form-row justify-content-between">
         <div class="input-group col-sm-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="ScaleTypeSelect">Scale Type:</label>
+            <label class="input-group-text" for="ScaleTypeSelect" data-toggle="tooltip" 
+              data-placement="top" title="Choose a scale. This determines which notes relative to the key can appear in the track.">Scale Type:</label>
           </div>
           <select class="form-control selectpicker" data-live-search="true" id="ScaleTypeSelect"></select>
         </div>
@@ -319,7 +321,7 @@
 
 
 
-    <!-- Matched Container -->
+    <!-- Matched Container 
     <div class="container" id="matched-container" style="display: none">
       <h2>Matched Files</h2>
       <br>
@@ -332,8 +334,9 @@
         <tr><th>Raw</th><th>Rendered</th><th> </th></tr>
       </table>
     </div>
+    -->
 
-    <!-- Unmatched Container -->
+    <!-- Unmatched Container
     <div class="container" id="unmatched-container" style="display: none">
       <h2>Unmatched</h2> 
       <span>Drag to match</span>
@@ -349,7 +352,7 @@
       <br>
     </div>
     <br>
-
+    -->
 
     <input id="file-upload" type="file" name="name" style="display: none;" accept=".txt, .webm" multiple>
   </div>
