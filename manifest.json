@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "FrequencyBot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create MIDI files with random notes from a chosen scale.",
   "permissions": [
     "storage"
@@ -36,7 +36,7 @@
       "src/js/content.js"
     ],
     "matches": [
-      "<all_urls>"
+      "activeTab"
     ],
     "run_at": "document_end"
   }],
