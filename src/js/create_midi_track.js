@@ -50,6 +50,8 @@ function getNoteEvents(options) {
 		noteEvents.push(result);
 		beats += result.duration.length + result.wait.length;
 		lastPitch = result.pitch[0];
+		constraints.direction = constraints.lastPitch - lastPitch > 0 ? "decreasing" : "increasing";
+		constraints.lastPitch = lastPitch;
 	}
 
 	return noteEvents;
@@ -86,6 +88,8 @@ function getConstraints(options) {
 		max: semitones.length - 1,
 		semitones: semitones
 	};
+
+	// For Guassian pitch distribution
 	if (options.scale.randomType === "normal") {
 		let res = getMSD(constraints.pitch.min, constraints.pitch.max, constraints.pitch.center);
 		constraints.pitch.mean = res.Mean;
@@ -130,20 +134,33 @@ function select(min, max, randomMethod, a, c) {
 }
 
 // randomly select pitch from given array of pitches
-function selectPitch(arr, randomMethod, min, max, mean, sd) {
-	let index = Math.floor(select(0, arr.length, randomMethod, mean, sd));
+function selectPitch(arr, constraints, options) {
+	let arr = constraints.pitch.semitones;
+	if (options.randomMethod === "walking") {
+		let lp = constraints.lastPitch;
+		if (constraints.direction === "decreasing") {
+			let a = lp - 1,
+				b = lp + 1
+		} else {
+			let a = lp + 1,
+				b = lp - 1
+		}
+		let choices = Array(65).fill(a).concat(Array(35).fill(b)),
+			index = Math.floor(Math.random() * choices.length);
+	} else {
+		let index = Math.floor(select(0, arr.length, 
+									  options.randomMethod, 
+									  constraints.pitch.mean, 
+									  constraints.pitch.sd));
+	}
 	if (index == arr.length) index--;
+	if (index < 0) index = 0;
 	return arr[index];
 }
 
 // returns a single note event
 function getNoteEvent(constraints, options) {
-	let pitch = selectPitch(constraints.pitch.semitones,
-					   options.scale.randomType,
-					   constraints.pitch.min,
-					   constraints.pitch.max,
-					   constraints.pitch.mean,
-					   constraints.pitch.SD),
+	let pitch = selectPitch(constraints, options),
 		noteDurVal = select(constraints.note.min,
 					        constraints.note.max,
 					        options.note.randomType,
@@ -171,6 +188,8 @@ function getNoteEvent(constraints, options) {
 // center: center of distribution (optional, only if it should not be symmetric)
 function getMSD(min, max, center = round((max-min)/2)) {
 	let SD = Math.max(max-center, center-min)/3;
-	return {Mean: center,
-			SD: SD}
+	return {
+				Mean: center,
+				SD: SD
+			}
 }
