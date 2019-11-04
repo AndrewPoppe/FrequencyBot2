@@ -134,7 +134,7 @@ function select(min, max, randomMethod, a, c) {
 }
 
 // randomly select pitch from given array of pitches
-function selectPitch(arr, constraints, options) {
+function selectPitch(constraints, options) {
 	let arr = constraints.pitch.semitones;
 	if (options.randomMethod === "walking") {
 		let lp = constraints.lastPitch;
