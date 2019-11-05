@@ -26,7 +26,7 @@ function createTrack(options) {
 				   `${options.track.bpm}BPM` +
 				   `.mid`;
 	
-	console.log(notes);
+	console.log(notes.map(n => { return(n.pitch[0]) }));
 	saveAs(blob, filename);
 }
 
@@ -135,25 +135,31 @@ function select(min, max, randomMethod, a, c) {
 
 // randomly select pitch from given array of pitches
 function selectPitch(constraints, options) {
-	let arr = constraints.pitch.semitones;
-	if (options.note.randomMethod === "walking") {
-		let lp = constraints.lastPitch;
+	let arr = constraints.pitch.semitones,
+		index;
+	if (options.scale.randomType === "walking") {
+		let lp = constraints.lastPitch || arr[Math.floor(Math.random() * arr.length)],
+			li = arr.indexOf(lp),
+			a, b;
 		if (constraints.direction === "decreasing") {
-			let a = lp - 1,
-				b = lp + 1
+			a = li - 1;
+			b = li + 1;
 		} else {
-			let a = lp + 1,
-				b = lp - 1
+			a = li + 1;
+			b = li - 1;
 		}
-		let choices = Array(65).fill(a).concat(Array(35).fill(b)),
-			index = Math.floor(Math.random() * choices.length);
+		// TODO: Can be creative here: 
+		// 	1) make ratios customizable
+		//  2) add some random jumps
+		let choices = Array(65).fill(a).concat(Array(35).fill(b));
+		index = choices[Math.floor(Math.random() * choices.length)];
 	} else {
-		let index = Math.floor(select(0, arr.length, 
-									  options.randomMethod, 
-									  constraints.pitch.mean, 
-									  constraints.pitch.sd));
+		index = Math.floor(select(0, arr.length, 
+								  options.scale.randomType, 
+								  constraints.pitch.mean, 
+								  constraints.pitch.sd));
 	}
-	if (index == arr.length) index--;
+	if (index >= arr.length) index = arr.length - 1;
 	if (index < 0) index = 0;
 	return arr[index];
 }
