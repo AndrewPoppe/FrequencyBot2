@@ -192,7 +192,7 @@ function getNoteEvent(constraints, options) {
 // min: min value
 // max: max value
 // center: center of distribution (optional, only if it should not be symmetric)
-function getMSD(min, max, center = round((max-min)/2)) {
+function getMSD(min, max, center = Math.round((max-min)/2)) {
 	let SD = Math.max(max-center, center-min)/3;
 	return {
 				Mean: center,
